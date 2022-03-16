@@ -17,8 +17,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 
-find_package(QT NAMES Qt6 COMPONENTS Core Quick REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
+find_package(QT NAMES Qt6 COMPONENTS Core Quick Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick Widgets REQUIRED)
+
 include(FetchContent)
 FetchContent_Declare(
     nvlib
@@ -29,6 +30,7 @@ FetchContent_MakeAvailable(nvlib)
 
 set(PROJECT_SOURCES
         main.cpp
+        component.cpp
         qml.qrc
 )
 
@@ -46,4 +48,4 @@ set_target_properties(nv_qt PROPERTIES
 target_compile_definitions(nv_qt
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(nv_qt
-  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick nv_api)
+  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick Qt${QT_VERSION_MAJOR}::Widgets nv_api)
